@@ -1,5 +1,6 @@
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
+import FeaturedRooms from '../components/FeaturedRooms';
 import About from '../components/About';
 import Services from '../components/Services';
 import Reservation from '../components/Reservation';
@@ -11,6 +12,7 @@ const HomePage = () => {
       <Navbar />
       <main>
         <Hero />
+        <FeaturedRooms />
         <About />
         <Services />
         <Reservation />

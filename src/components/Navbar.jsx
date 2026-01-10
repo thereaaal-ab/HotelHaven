@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useDarkMode } from '../contexts/DarkModeContext';
 import { FiMoon, FiSun, FiMenu, FiX } from 'react-icons/fi';
 
@@ -8,6 +8,7 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { isDark, toggleDarkMode } = useDarkMode();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,19 +18,16 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToSection = (sectionId) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      setIsMobileMenuOpen(false);
-    }
-  };
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [location]);
 
   const navLinks = [
-    { id: 'home', label: 'Home' },
-    { id: 'about', label: 'About' },
-    { id: 'services', label: 'Services' },
-    { id: 'reservation', label: 'Reservation' },
+    { path: '/', label: 'Home' },
+    { path: '/about', label: 'About' },
+    { path: '/rooms', label: 'Rooms & Suites' },
+    { path: '/reservation', label: 'Reservation' },
+    { path: '/contact', label: 'Contact' },
   ];
 
   return (
@@ -63,14 +61,20 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navLinks.map((link) => (
-              <button
-                key={link.id}
-                onClick={() => scrollToSection(link.id)}
-                className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors font-medium"
-                aria-label={`Navigate to ${link.label} section`}
+              <NavLink
+                key={link.path}
+                to={link.path}
+                className={({ isActive }) =>
+                  `font-medium transition-colors ${
+                    isActive
+                      ? 'text-primary-600 dark:text-primary-400 border-b-2 border-primary-600 dark:border-primary-400 pb-1'
+                      : 'text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400'
+                  }`
+                }
+                aria-label={`Navigate to ${link.label}`}
               >
                 {link.label}
-              </button>
+              </NavLink>
             ))}
             <button
               onClick={toggleDarkMode}
@@ -126,13 +130,20 @@ const Navbar = () => {
           >
             <div className="container-custom py-4 space-y-4">
               {navLinks.map((link) => (
-                <button
-                  key={link.id}
-                  onClick={() => scrollToSection(link.id)}
-                  className="block w-full text-left text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors font-medium py-2"
+                <NavLink
+                  key={link.path}
+                  to={link.path}
+                  className={({ isActive }) =>
+                    `block w-full text-left font-medium py-2 transition-colors ${
+                      isActive
+                        ? 'text-primary-600 dark:text-primary-400'
+                        : 'text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400'
+                    }`
+                  }
+                  onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {link.label}
-                </button>
+                </NavLink>
               ))}
             </div>
           </motion.div>
