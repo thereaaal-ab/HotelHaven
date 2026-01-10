@@ -1,7 +1,9 @@
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { useReservations } from '../contexts/ReservationsContext';
 import { useDarkMode } from '../contexts/DarkModeContext';
+import { useAuth } from '../contexts/AuthContext';
 import {
   FiArrowLeft,
   FiCheck,
@@ -14,14 +16,22 @@ import {
   FiHome,
   FiFilter,
   FiSearch,
+  FiLogOut,
 } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
 const AdminDashboard = () => {
   const { reservations, updateReservationStatus, deleteReservation } = useReservations();
   const { isDark } = useDarkMode();
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
   const [statusFilter, setStatusFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
 
   const filteredReservations = useMemo(() => {
     return reservations.filter((res) => {
@@ -105,11 +115,31 @@ const AdminDashboard = () => {
                 </p>
               </div>
             </div>
-            <div className="text-right">
-              <p className="text-sm text-gray-600 dark:text-gray-400">Total Reservations</p>
-              <p className="text-2xl font-bold text-primary-600 dark:text-primary-400">
-                {reservations.length}
-              </p>
+            <div className="flex items-center gap-6">
+              <div className="text-right">
+                <p className="text-sm text-gray-600 dark:text-gray-400">Total Reservations</p>
+                <p className="text-2xl font-bold text-primary-600 dark:text-primary-400">
+                  {reservations.length}
+                </p>
+              </div>
+              {user && (
+                <div className="flex items-center gap-3 border-l border-gray-200 dark:border-gray-700 pl-6">
+                  <div className="text-right">
+                    <p className="text-sm font-medium text-gray-900 dark:text-white">
+                      {user.name || user.email}
+                    </p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">Admin</p>
+                  </div>
+                  <button
+                    onClick={handleLogout}
+                    className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition-colors"
+                    aria-label="Logout"
+                    title="Logout"
+                  >
+                    <FiLogOut className="w-5 h-5" />
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>

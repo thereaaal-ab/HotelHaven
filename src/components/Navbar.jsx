@@ -1,15 +1,13 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useDarkMode } from '../contexts/DarkModeContext';
-import { FiMoon, FiSun, FiMenu, FiX, FiSettings } from 'react-icons/fi';
+import { FiMoon, FiSun, FiMenu, FiX } from 'react-icons/fi';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { isDark, toggleDarkMode } = useDarkMode();
-  const location = useLocation();
-  const isAdminPage = location.pathname === '/admin';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -64,27 +62,16 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            {!isAdminPage &&
-              navLinks.map((link) => (
-                <button
-                  key={link.id}
-                  onClick={() => scrollToSection(link.id)}
-                  className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors font-medium"
-                  aria-label={`Navigate to ${link.label} section`}
-                >
-                  {link.label}
-                </button>
-              ))}
-            {!isAdminPage && (
-              <Link
-                to="/admin"
-                className="flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors font-medium"
-                aria-label="Go to admin dashboard"
+            {navLinks.map((link) => (
+              <button
+                key={link.id}
+                onClick={() => scrollToSection(link.id)}
+                className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors font-medium"
+                aria-label={`Navigate to ${link.label} section`}
               >
-                <FiSettings className="w-5 h-5" />
-                <span>Admin</span>
-              </Link>
-            )}
+                {link.label}
+              </button>
+            ))}
             <button
               onClick={toggleDarkMode}
               className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
@@ -138,26 +125,15 @@ const Navbar = () => {
             className="md:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800"
           >
             <div className="container-custom py-4 space-y-4">
-              {!isAdminPage &&
-                navLinks.map((link) => (
-                  <button
-                    key={link.id}
-                    onClick={() => scrollToSection(link.id)}
-                    className="block w-full text-left text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors font-medium py-2"
-                  >
-                    {link.label}
-                  </button>
-                ))}
-              {!isAdminPage && (
-                <Link
-                  to="/admin"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors font-medium py-2"
+              {navLinks.map((link) => (
+                <button
+                  key={link.id}
+                  onClick={() => scrollToSection(link.id)}
+                  className="block w-full text-left text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors font-medium py-2"
                 >
-                  <FiSettings className="w-5 h-5" />
-                  <span>Admin</span>
-                </Link>
-              )}
+                  {link.label}
+                </button>
+              ))}
             </div>
           </motion.div>
         )}

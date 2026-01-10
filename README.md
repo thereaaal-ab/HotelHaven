@@ -13,6 +13,7 @@ A modern, fully responsive single-page application for Luxury Haven Hotel built 
 - 🎨 **Animations**: Smooth transitions using Framer Motion
 - 📅 **Reservation System**: Functional booking form with validation
 - 🛠️ **Admin Dashboard**: View and manage all reservations with filtering and status updates
+- 🔐 **Supabase Authentication**: Secure login system with Supabase backend
 
 ## Tech Stack
 
@@ -23,6 +24,7 @@ A modern, fully responsive single-page application for Luxury Haven Hotel built 
 - **React Hook Form** - Form handling and validation
 - **React Datepicker** - Date selection component
 - **React Icons** - Icon library
+- **Supabase** - Authentication and database backend
 
 ## Getting Started
 
@@ -30,6 +32,7 @@ A modern, fully responsive single-page application for Luxury Haven Hotel built 
 
 - Node.js (v16 or higher)
 - npm or yarn
+- Supabase account (already configured)
 
 ### Installation
 
@@ -38,12 +41,31 @@ A modern, fully responsive single-page application for Luxury Haven Hotel built 
 npm install
 ```
 
-2. Start the development server:
+2. (Optional) Create `.env` file with Supabase credentials:
+```env
+VITE_SUPABASE_URL=https://prsbwhvqugthmqlbpovs.supabase.co
+VITE_SUPABASE_ANON_KEY=your-anon-key
+```
+Note: Credentials are already configured in `src/lib/supabase.js` as fallback.
+
+3. Start the development server:
 ```bash
 npm run dev
 ```
 
-3. Open your browser and navigate to `http://localhost:3000`
+4. Open your browser and navigate to `http://localhost:3000`
+
+### Setting Up Admin Users
+
+To access the admin dashboard, you need to create an admin user in Supabase:
+
+1. Go to [Supabase Dashboard](https://supabase.com/dashboard)
+2. Select your project
+3. Navigate to **Authentication** > **Users**
+4. Click **"Add user"** and create an admin account
+5. Use these credentials to log in at `/login`
+
+See `SUPABASE_SETUP.md` for detailed instructions.
 
 ### Build for Production
 
@@ -107,7 +129,7 @@ The admin dashboard provides a comprehensive interface to manage hotel reservati
 - **Delete Reservations**: Remove bookings with confirmation
 - **Responsive Design**: Works seamlessly on all devices
 
-Access the admin dashboard by clicking the "Admin" link in the navigation bar or navigating to `/admin`.
+Access the admin dashboard by navigating to `/admin` (requires authentication). The admin link has been removed from the main navigation for security. Log in at `/login` to access the dashboard.
 
 ## Customization
 
