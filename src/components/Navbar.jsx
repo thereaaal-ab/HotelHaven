@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useDarkMode } from '../contexts/DarkModeContext';
 import { FiMoon, FiSun, FiMenu, FiX } from 'react-icons/fi';
+import Logo from './Logo';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -35,7 +36,7 @@ const Navbar = () => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-500 ease-in-out ${
         isScrolled
           ? 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-lg'
           : 'bg-transparent'
@@ -43,29 +44,34 @@ const Navbar = () => {
       role="navigation"
       aria-label="Main navigation"
     >
-      <div className="container-custom">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <Link to="/">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="flex items-center space-x-2"
-            >
-              <h1 className="text-2xl md:text-3xl font-serif font-bold text-primary-600 dark:text-primary-400">
-                Luxury Haven
-              </h1>
-            </motion.div>
-          </Link>
+      <div className="container-custom w-full max-w-full">
+        <div className="flex items-center justify-center h-20 relative">
+          {/* Logo - Top Left */}
+          <div className="absolute left-4 sm:left-6 lg:left-8 top-1/2 -translate-y-1/2">
+            <Logo />
+          </div>
 
-          {/* Desktop Navigation */}
+          {/* Dark Mode Toggle - Top Right */}
+          <button
+            onClick={toggleDarkMode}
+            className="absolute right-4 sm:right-6 lg:right-8 top-1/2 -translate-y-1/2 p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-300 ease-in-out"
+            aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+          >
+            {isDark ? (
+              <FiSun className="w-5 h-5 text-yellow-500" />
+            ) : (
+              <FiMoon className="w-5 h-5 text-gray-700" />
+            )}
+          </button>
+
+          {/* Desktop Navigation - Centered */}
           <div className="hidden md:flex items-center space-x-8">
             {navLinks.map((link) => (
               <NavLink
                 key={link.path}
                 to={link.path}
                 className={({ isActive }) =>
-                  `font-medium transition-colors ${
+                  `font-medium transition-all duration-300 ease-in-out ${
                     isActive
                       ? 'text-primary-600 dark:text-primary-400 border-b-2 border-primary-600 dark:border-primary-400 pb-1'
                       : 'text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400'
@@ -76,24 +82,13 @@ const Navbar = () => {
                 {link.label}
               </NavLink>
             ))}
-            <button
-              onClick={toggleDarkMode}
-              className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-              aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-            >
-              {isDark ? (
-                <FiSun className="w-5 h-5 text-yellow-500" />
-              ) : (
-                <FiMoon className="w-5 h-5 text-gray-700" />
-              )}
-            </button>
           </div>
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center space-x-4">
             <button
               onClick={toggleDarkMode}
-              className="p-2 rounded-full bg-gray-200 dark:bg-gray-700"
+              className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 transition-all duration-300 ease-in-out"
               aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
             >
               {isDark ? (
@@ -104,7 +99,7 @@ const Navbar = () => {
             </button>
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 rounded-lg bg-gray-200 dark:bg-gray-700"
+              className="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 transition-all duration-300 ease-in-out"
               aria-label="Toggle mobile menu"
               aria-expanded={isMobileMenuOpen}
             >
@@ -125,7 +120,7 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
             className="md:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800"
           >
             <div className="container-custom py-4 space-y-4">
@@ -134,7 +129,7 @@ const Navbar = () => {
                   key={link.path}
                   to={link.path}
                   className={({ isActive }) =>
-                    `block w-full text-left font-medium py-2 transition-colors ${
+                    `block w-full text-left font-medium py-2 transition-all duration-300 ease-in-out ${
                       isActive
                         ? 'text-primary-600 dark:text-primary-400'
                         : 'text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400'

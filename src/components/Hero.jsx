@@ -28,7 +28,7 @@ const Hero = () => {
           loading="eager"
           fetchpriority="high"
         />
-        <div className="absolute inset-0 bg-black/50 dark:bg-black/60" />
+        <div className="absolute inset-0 bg-black/50 dark:bg-black/60 transition-opacity duration-500 ease-in-out" />
       </div>
 
       {/* Content Overlay */}
@@ -36,7 +36,7 @@ const Hero = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: 1, delay: 0.2, ease: [0.4, 0, 0.2, 1] }}
         >
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-white mb-4">
             Luxury Haven Hotel
@@ -46,7 +46,7 @@ const Hero = () => {
         <motion.p
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          transition={{ duration: 1, delay: 0.4, ease: [0.4, 0, 0.2, 1] }}
           className="text-xl md:text-2xl lg:text-3xl text-white/90 mb-8 font-light"
         >
           Experience Unparalleled Luxury
@@ -55,11 +55,11 @@ const Hero = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
+          transition={{ duration: 1, delay: 0.6, ease: [0.4, 0, 0.2, 1] }}
         >
           <button
             onClick={scrollToReservation}
-            className="bg-primary-600 hover:bg-primary-700 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center gap-2 mx-auto"
+            className="bg-primary-600 hover:bg-primary-700 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-500 ease-in-out transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center gap-2 mx-auto"
             aria-label="Book your stay now"
           >
             Book Now

@@ -36,6 +36,10 @@ const Reservation = () => {
     reset();
     setCheckInDate(null);
     setCheckOutDate(null);
+    
+    // Scroll to top to show the message
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
     setTimeout(() => setShowConfirmation(false), 5000);
   };
 
@@ -113,6 +117,24 @@ const Reservation = () => {
       className="section-padding bg-gray-50 dark:bg-gray-800"
       aria-labelledby="reservation-heading"
     >
+      {/* Success Message */}
+      {showConfirmation && (
+        <motion.div
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -50 }}
+          className="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 max-w-md w-full mx-4"
+        >
+          <div className="bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg flex items-center gap-3">
+            <FiCheck className="w-6 h-6 flex-shrink-0" />
+            <div>
+              <p className="font-semibold">Reservation Booked!</p>
+              <p className="text-sm text-white/90">Your booking has been confirmed successfully.</p>
+            </div>
+          </div>
+        </motion.div>
+      )}
+
       <div className="container-custom">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -273,35 +295,6 @@ const Reservation = () => {
             </motion.div>
           </form>
 
-          {/* Confirmation Modal */}
-          {showConfirmation && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
-              role="dialog"
-              aria-labelledby="confirmation-title"
-              aria-modal="true"
-            >
-              <div className="bg-white dark:bg-gray-800 rounded-lg p-8 max-w-md mx-4 shadow-2xl">
-                <div className="flex items-center justify-center mb-4">
-                  <div className="bg-green-500 rounded-full p-3">
-                    <FiCheck className="w-8 h-8 text-white" />
-                  </div>
-                </div>
-                <h3
-                  id="confirmation-title"
-                  className="text-2xl font-bold text-gray-900 dark:text-white text-center mb-2"
-                >
-                  Reservation Confirmed!
-                </h3>
-                <p className="text-gray-600 dark:text-gray-400 text-center">
-                  Thank you for your booking. We've sent a confirmation email to your address.
-                </p>
-              </div>
-            </motion.div>
-          )}
         </motion.div>
       </div>
     </section>

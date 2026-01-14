@@ -42,7 +42,7 @@ const Contact = () => {
   ];
 
   return (
-    <div className="pt-20">
+    <div>
       {/* Header */}
       <section className="bg-gray-50 dark:bg-gray-800 section-padding">
         <div className="container-custom">
@@ -204,4 +204,5 @@ const Contact = () => {
 };
 
 export default Contact;
+
 

@@ -1,8 +1,10 @@
 import { motion } from 'framer-motion';
-import { FiMail, FiPhone, FiMapPin, FiFacebook, FiTwitter, FiInstagram } from 'react-icons/fi';
+import { FiMail, FiPhone, FiMapPin, FiFacebook, FiTwitter, FiInstagram, FiMoon, FiSun } from 'react-icons/fi';
+import { useDarkMode } from '../contexts/DarkModeContext';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const { isDark, toggleDarkMode } = useDarkMode();
 
   const contactInfo = [
     {
@@ -80,7 +82,7 @@ const Footer = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <h4 className="text-xl font-semibold mb-4">Follow Us</h4>
-            <div className="flex gap-4">
+            <div className="flex gap-4 mb-4">
               {socialLinks.map((social, index) => {
                 const Icon = social.icon;
                 return (
@@ -91,13 +93,26 @@ const Footer = () => {
                     rel="noopener noreferrer"
                     whileHover={{ scale: 1.1, y: -2 }}
                     whileTap={{ scale: 0.95 }}
-                    className="bg-gray-800 hover:bg-primary-600 p-3 rounded-lg transition-colors"
+                    className="bg-gray-800 hover:bg-primary-600 p-3 rounded-lg transition-all duration-300 ease-in-out"
                     aria-label={social.label}
                   >
                     <Icon className="w-5 h-5" />
                   </motion.a>
                 );
               })}
+            </div>
+            <div>
+              <button
+                onClick={toggleDarkMode}
+                className="bg-gray-800 hover:bg-primary-600 p-3 rounded-lg transition-colors"
+                aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+              >
+                {isDark ? (
+                  <FiSun className="w-5 h-5" />
+                ) : (
+                  <FiMoon className="w-5 h-5" />
+                )}
+              </button>
             </div>
           </motion.div>
         </div>
@@ -115,10 +130,10 @@ const Footer = () => {
               &copy; {currentYear} Luxury Haven Hotel. All rights reserved.
             </p>
             <div className="flex gap-6 text-sm text-gray-400">
-              <a href="#" className="hover:text-white transition-colors">
+              <a href="#" className="hover:text-white transition-colors duration-300 ease-in-out">
                 Privacy Policy
               </a>
-              <a href="#" className="hover:text-white transition-colors">
+              <a href="#" className="hover:text-white transition-colors duration-300 ease-in-out">
                 Terms of Service
               </a>
             </div>

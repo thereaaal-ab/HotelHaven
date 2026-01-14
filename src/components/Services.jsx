@@ -17,37 +17,43 @@ const Services = () => {
     {
       icon: FiCoffee,
       title: 'Breakfast & Dining',
-      description: 'Complimentary breakfast buffet and fine-dining restaurant with world-class cuisine.',
+      description: 'Start your day with our complimentary breakfast buffet featuring fresh pastries, seasonal fruits, and made-to-order dishes. Our fine-dining restaurant offers world-class cuisine prepared by award-winning chefs using locally sourced ingredients.',
+      details: ['Complimentary breakfast buffet', 'Fine-dining restaurant', 'Room service 24/7', 'Private dining available', 'Wine selection'],
       image: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?w=600&q=80',
     },
     {
       icon: FiHome,
       title: 'Luxury Rooms',
-      description: 'Elegant standard rooms, deluxe suites, and exclusive penthouse options with premium amenities.',
+      description: 'Elegant standard rooms, deluxe suites, and exclusive penthouse options with premium amenities. Each room is thoughtfully designed with modern comforts, plush bedding, and stunning views of the city or ocean.',
+      details: ['200+ luxury rooms', 'Premium amenities', 'Smart room controls', 'Complimentary WiFi', 'Daily housekeeping'],
       image: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80',
     },
     {
       icon: FiStar,
       title: 'Premium Suites',
-      description: 'Spacious suites with stunning views, private balconies, and personalized butler service.',
+      description: 'Spacious suites with stunning views, private balconies, and personalized butler service. Experience the ultimate in luxury with separate living areas, premium furnishings, and exclusive access to our VIP lounge.',
+      details: ['Private balconies', 'Butler service', 'Separate living areas', 'VIP lounge access', 'Premium minibar'],
       image: 'https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=600&q=80',
     },
     {
       icon: FiDroplet,
       title: 'Spa & Wellness',
-      description: 'Relax and rejuvenate at our world-class spa with professional therapists and premium treatments.',
+      description: 'Relax and rejuvenate at our world-class spa with professional therapists and premium treatments. Our wellness center offers massages, facials, body treatments, and holistic therapies in a serene environment.',
+      details: ['Full-service spa', 'Professional therapists', 'Holistic treatments', 'Sauna & steam room', 'Wellness programs'],
       image: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600&q=80',
     },
     {
       icon: FiActivity,
       title: 'Fitness & Pool',
-      description: 'State-of-the-art fitness center and outdoor infinity pool with panoramic city views.',
+      description: 'State-of-the-art fitness center and outdoor infinity pool with panoramic city views. Stay active with our modern equipment, personal training sessions, and refreshing poolside service.',
+      details: ['24/7 fitness center', 'Infinity pool', 'Personal training', 'Poolside service', 'Yoga classes'],
       image: 'https://images.unsplash.com/photo-1576610616656-d3aa5d1f4534?w=600&q=80',
     },
     {
       icon: FiCalendar,
       title: 'Events & Conferences',
-      description: 'Host memorable weddings, conferences, and corporate events in our elegant banquet halls.',
+      description: 'Host memorable weddings, conferences, and corporate events in our elegant banquet halls. Our event planning team ensures every detail is perfect, from intimate gatherings to grand celebrations.',
+      details: ['Elegant banquet halls', 'Event planning services', 'Audio-visual equipment', 'Catering services', 'Flexible spaces'],
       image: 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=600&q=80',
     },
   ];
@@ -129,12 +135,20 @@ const Services = () => {
                   </div>
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
                     {service.title}
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+                  <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
                     {service.description}
                   </p>
+                  <ul className="space-y-2">
+                    {service.details.map((detail, idx) => (
+                      <li key={idx} className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-400">
+                        <span className="text-primary-600 dark:text-primary-400 mt-1">•</span>
+                        <span>{detail}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </motion.div>
             );

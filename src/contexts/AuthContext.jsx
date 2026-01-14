@@ -17,12 +17,17 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
+    let isMounted = true;
+    let subscription = null;
+
     // Check for existing session
     const checkSession = async () => {
       try {
-        const { data: { session } } = await supabase.auth.getSession();
+        const { data: { session }, error } = await supabase.auth.getSession();
         
-        if (session?.user) {
+        if (error) throw error;
+        
+        if (isMounted && session?.user) {
           setUser({
             id: session.user.id,
             email: session.user.email,
@@ -32,17 +37,23 @@ export const AuthProvider = ({ children }) => {
           setIsAuthenticated(true);
         }
       } catch (error) {
-        console.error('Error checking session:', error);
+        if (isMounted) {
+          console.error('Error checking session:', error);
+        }
       } finally {
-        setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     };
 
     checkSession();
 
     // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+    const { data: { subscription: authSubscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
+        if (!isMounted) return;
+        
         if (session?.user) {
           setUser({
             id: session.user.id,
@@ -59,8 +70,13 @@ export const AuthProvider = ({ children }) => {
       }
     );
 
+    subscription = authSubscription;
+
     return () => {
-      subscription.unsubscribe();
+      isMounted = false;
+      if (subscription) {
+        subscription.unsubscribe();
+      }
     };
   }, []);
 

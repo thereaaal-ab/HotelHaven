@@ -32,7 +32,7 @@ const Rooms = () => {
   const views = ['ocean', 'city', 'garden'];
 
   return (
-    <div className="pt-20">
+    <div>
       {/* Header */}
       <section className="bg-gray-50 dark:bg-gray-800 section-padding">
         <div className="container-custom">
@@ -217,4 +217,5 @@ const Rooms = () => {
 };
 
 export default Rooms;
+
 
